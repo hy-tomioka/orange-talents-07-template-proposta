@@ -2,7 +2,7 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/proposal}
-    username: ${DATABASE_USERNAME:root}
+    username: ${DATABASE_USERNAME:proposal}
     password: ${DATABASE_PASSWORD:1234}
   jpa:
     hibernate:
@@ -11,3 +11,8 @@ spring:
       hibernate:
         show-sql: true
         format-sql: true
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always

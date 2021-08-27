@@ -29,7 +29,7 @@ public class NewProposalController {
         Proposal proposal = request.toProposal();
         manager.persist(proposal);
         URI uri = uriComponentsBuilder.path("/api/proposals/{id}").buildAndExpand(proposal.getId()).toUri();
-        // implementar logs
+        // testar @UniqueValue e containizar este serviço
         return ResponseEntity.created(uri).build();
     }
 }

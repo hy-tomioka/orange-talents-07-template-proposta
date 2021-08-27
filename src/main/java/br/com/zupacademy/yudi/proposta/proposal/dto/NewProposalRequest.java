@@ -2,6 +2,7 @@ package br.com.zupacademy.yudi.proposta.proposal.dto;
 
 import br.com.zupacademy.yudi.proposta.proposal.Proposal;
 import br.com.zupacademy.yudi.proposta.shared.validation.CpfOrCnpj;
+import br.com.zupacademy.yudi.proposta.shared.validation.UniqueValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,7 @@ public class NewProposalRequest {
 
     @CpfOrCnpj
     @NotNull
+    @UniqueValue(domainClass = Proposal.class, fieldName = "document")
     private String document;
     @NotBlank
     @Email
