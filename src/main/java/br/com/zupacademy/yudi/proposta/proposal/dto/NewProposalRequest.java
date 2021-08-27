@@ -16,7 +16,6 @@ public class NewProposalRequest {
 
     @CpfOrCnpj
     @NotNull
-    @UniqueValue(domainClass = Proposal.class, fieldName = "document")
     private String document;
     @NotBlank
     @Email
@@ -42,5 +41,9 @@ public class NewProposalRequest {
     public Proposal toProposal() {
         logger.info("Proposal document={} and salary={} created", document, salary);
         return new Proposal(document, email, name, address, salary);
+    }
+
+    public String getDocument() {
+        return document;
     }
 }
