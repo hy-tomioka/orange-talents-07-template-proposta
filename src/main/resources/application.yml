@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/proposal}
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:1234}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show-sql: true
+        format-sql: true
