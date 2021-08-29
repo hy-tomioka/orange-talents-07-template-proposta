@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/proposal}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5434/proposal}
     username: ${DATABASE_USERNAME:proposal}
     password: ${DATABASE_PASSWORD:1234}
   jpa:
@@ -11,8 +11,20 @@ spring:
       hibernate:
         show-sql: true
         format-sql: true
+      javax.persistence:
+        query.timeout: 50
 
 server:
   error:
     include-message: always
     include-binding-errors: always
+
+feign:
+  client.config:
+    SolicitationClient:
+      read-timeout: 100
+      connect-timeout: 100
+
+external.services:
+  url:
+    analise: ${ANALISE_URL:http://localhost:9999/api}

@@ -1,6 +1,8 @@
 package br.com.zupacademy.yudi.proposta.proposal;
 
 import br.com.zupacademy.yudi.proposta.shared.validation.CpfOrCnpj;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -9,9 +11,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
+import static javax.persistence.EnumType.STRING;
+
 @Entity
 @Table(name = "proposals")
 public class Proposal {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Proposal.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +44,9 @@ public class Proposal {
     @Positive
     private BigDecimal salary;
 
+    @Enumerated(STRING)
+    private ProposalStatus status;
+
     public Proposal(String document, String email, String name, String address, BigDecimal salary) {
         this.document = document;
         this.email = email;
@@ -50,6 +59,18 @@ public class Proposal {
         return id;
     }
 
+    public String getDocument() {
+        return document;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ProposalStatus getStatus() {
+        return status;
+    }
+
     @Override
     public String toString() {
         return "Proposal{" +
@@ -59,6 +80,12 @@ public class Proposal {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", salary=" + salary +
+                ", status=" + status +
                 '}';
+    }
+
+    public void setStatus(ProposalStatus status) {
+        this.status = status;
+        LOG.info("Analysis result = {} for document = {}", this.status, this.document);
     }
 }

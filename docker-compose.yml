@@ -46,6 +46,7 @@ services:
       DATABASE_URL: jdbc:postgresql://postgres-proposals:5432/proposal
       DATABASE_USERNAME: proposal
       DATABASE_PASSWORD: 1234
+      ANALISE_URL: http://analise:9999/api
     depends_on:
       - postgres-proposals
 
