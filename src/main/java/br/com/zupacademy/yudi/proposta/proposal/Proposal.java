@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static javax.persistence.EnumType.STRING;
 
@@ -51,6 +52,10 @@ public class Proposal {
     @OneToOne
     @JoinColumn(unique = true, name = "card_id")
     private Card card;
+
+    @Column(nullable = false)
+    @NotNull
+    private UUID uuid = UUID.randomUUID();
 
     @Deprecated
     private Proposal() {

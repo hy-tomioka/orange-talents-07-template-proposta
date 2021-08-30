@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.function.Supplier;
 
 @Component
 public class TransactionRunner {
@@ -22,5 +23,10 @@ public class TransactionRunner {
     public <T> T updateAndCommit(T o) {
         manager.merge(o);
         return o;
+    }
+
+    @Transactional
+    public <T> T execute(Supplier<T> function) {
+        return function.get();
     }
 }
