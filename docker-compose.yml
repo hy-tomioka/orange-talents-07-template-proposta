@@ -36,7 +36,7 @@ services:
 
   proposal:
     build:
-      dockerfile: Dockerfile
+      dockerfile: proposal.dockerfile
       context: .
     image: hytomioka/proposta
     container_name: proposal

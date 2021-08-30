@@ -49,7 +49,7 @@ public class NewProposalController {
         proposal.setStatus(ProposalStatus.fromValue(solicitationResult));
         transactionRunner.updateAndCommit(proposal);
 
-        URI uri = uriComponentsBuilder.path("/api/proposals/{id}").buildAndExpand(proposal.getId()).toUri();
+        URI uri = uriComponentsBuilder.path("/api/proposals/{uuid}").buildAndExpand(proposal.getUuid()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
@@ -59,7 +59,7 @@ public class NewProposalController {
     }
 
     private String sendRequestToAnalise(Proposal proposal) {
-        LOG.info("Sending resquest to Analie service for document {}", proposal.getDocument());
+        LOG.info("Sending resquest to Analise service for document {}", proposal.getDocument());
         String solicitationResult;
         try {
             solicitationResult = solicitationClient.evaluate(new SolicitationRequest(proposal))

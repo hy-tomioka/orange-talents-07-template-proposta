@@ -85,6 +85,10 @@ public class Proposal {
         return status;
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     @Override
     public String toString() {
         return "Proposal{" +
