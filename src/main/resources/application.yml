@@ -28,6 +28,7 @@ feign:
 external.services:
   url:
     analise: ${ANALISE_URL:http://localhost:9999/api}
+    contas: ${CONTAS_URL:http://localhost:8888/api}
 
 management:
   endpoint:

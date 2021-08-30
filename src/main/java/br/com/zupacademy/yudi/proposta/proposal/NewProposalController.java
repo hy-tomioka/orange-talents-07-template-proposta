@@ -1,7 +1,7 @@
 package br.com.zupacademy.yudi.proposta.proposal;
 
-import br.com.zupacademy.yudi.proposta.external.SolicitationClient;
-import br.com.zupacademy.yudi.proposta.external.SolicitationRequest;
+import br.com.zupacademy.yudi.proposta.external_services.analise.SolicitationClient;
+import br.com.zupacademy.yudi.proposta.external_services.analise.SolicitationRequest;
 import br.com.zupacademy.yudi.proposta.proposal.dto.NewProposalRequest;
 import br.com.zupacademy.yudi.proposta.shared.transaction.TransactionRunner;
 import feign.FeignException;
@@ -59,10 +59,12 @@ public class NewProposalController {
     }
 
     private String sendRequestToAnalise(Proposal proposal) {
+        LOG.info("Sending resquest to Analie service for document {}", proposal.getDocument());
         String solicitationResult;
         try {
             solicitationResult = solicitationClient.evaluate(new SolicitationRequest(proposal))
                     .getResultadoSolicitacao();
+            LOG.info("Request sent to Analise service for document {}", proposal.getDocument());
         } catch (FeignException exception) {
             solicitationResult = "COM_RESTRICAO";
             LOG.info("Proposal analysis returned 422 UnprocessedEntity for document = {}", proposal.getDocument());

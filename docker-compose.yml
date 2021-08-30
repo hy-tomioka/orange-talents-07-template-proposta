@@ -47,6 +47,7 @@ services:
       DATABASE_USERNAME: proposal
       DATABASE_PASSWORD: 1234
       ANALISE_URL: http://analise:9999/api
+      CONTAS_URL: http://contas:8888/api
     depends_on:
       - postgres-proposals
 

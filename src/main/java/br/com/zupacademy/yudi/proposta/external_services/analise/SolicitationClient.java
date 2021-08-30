@@ -1,4 +1,4 @@
-package br.com.zupacademy.yudi.proposta.external;
+package br.com.zupacademy.yudi.proposta.external_services.analise;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

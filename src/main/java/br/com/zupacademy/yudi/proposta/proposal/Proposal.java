@@ -1,5 +1,6 @@
 package br.com.zupacademy.yudi.proposta.proposal;
 
+import br.com.zupacademy.yudi.proposta.external_services.contas.Card;
 import br.com.zupacademy.yudi.proposta.shared.validation.CpfOrCnpj;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,14 @@ public class Proposal {
     @Enumerated(STRING)
     private ProposalStatus status;
 
+    @OneToOne
+    @JoinColumn(unique = true, name = "card_id")
+    private Card card;
+
+    @Deprecated
+    private Proposal() {
+    }
+
     public Proposal(String document, String email, String name, String address, BigDecimal salary) {
         this.document = document;
         this.email = email;
@@ -87,5 +96,9 @@ public class Proposal {
     public void setStatus(ProposalStatus status) {
         this.status = status;
         LOG.info("Analysis result = {} for document = {}", this.status, this.document);
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
     }
 }

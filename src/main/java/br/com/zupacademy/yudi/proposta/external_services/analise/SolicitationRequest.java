@@ -1,4 +1,4 @@
-package br.com.zupacademy.yudi.proposta.external;
+package br.com.zupacademy.yudi.proposta.external_services.analise;
 
 import br.com.zupacademy.yudi.proposta.proposal.Proposal;
 

@@ -1,11 +1,16 @@
-package br.com.zupacademy.yudi.proposta.external;
+package br.com.zupacademy.yudi.proposta.external_services.contas;
 
-public class SolicitationResponse {
+public class CardRequest {
 
     private String documento;
     private String nome;
-    private String resultadoSolicitacao;
     private String idProposta;
+
+    public CardRequest(String documento, String nome, String idProposta) {
+        this.documento = documento;
+        this.nome = nome;
+        this.idProposta = idProposta;
+    }
 
     public String getDocumento() {
         return documento;
@@ -13,10 +18,6 @@ public class SolicitationResponse {
 
     public String getNome() {
         return nome;
-    }
-
-    public String getResultadoSolicitacao() {
-        return resultadoSolicitacao;
     }
 
     public String getIdProposta() {
