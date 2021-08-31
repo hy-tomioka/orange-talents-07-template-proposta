@@ -1,5 +1,6 @@
 package br.com.zupacademy.yudi.proposta.external_services.contas;
 
+import br.com.zupacademy.yudi.proposta.card.Card;
 import br.com.zupacademy.yudi.proposta.proposal.Proposal;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

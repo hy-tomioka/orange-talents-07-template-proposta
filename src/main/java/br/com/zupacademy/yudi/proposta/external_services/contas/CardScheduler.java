@@ -1,5 +1,6 @@
 package br.com.zupacademy.yudi.proposta.external_services.contas;
 
+import br.com.zupacademy.yudi.proposta.card.Card;
 import br.com.zupacademy.yudi.proposta.proposal.Proposal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

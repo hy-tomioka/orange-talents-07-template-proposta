@@ -1,10 +1,14 @@
-package br.com.zupacademy.yudi.proposta.external_services.contas;
+package br.com.zupacademy.yudi.proposta.card;
 
 import br.com.zupacademy.yudi.proposta.proposal.Proposal;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.CascadeType.PERSIST;
 
 @Entity
@@ -28,6 +32,12 @@ public class Card {
     @JoinColumn(name = "proposal_id")
     private Proposal proposal;
 
+    @Column(nullable = false)
+    private UUID uuid = UUID.randomUUID();
+
+    @OneToMany(mappedBy = "card", cascade = ALL)
+    private Set<Biometry> biometries = new HashSet<>();
+
     @Deprecated
     private Card() {
     }
@@ -41,5 +51,9 @@ public class Card {
 
     public String getNumber() {
         return number;
+    }
+
+    public void addNewBiometry(Biometry biometry) {
+        this.biometries.add(biometry);
     }
 }
