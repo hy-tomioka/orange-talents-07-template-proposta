@@ -27,11 +27,11 @@ public class ProposalStatusController {
 
     @GetMapping("/{uuid}")
     public ResponseEntity<ProposalStatusResponse> consult(@PathVariable("uuid") UUID uuid) {
-        LOG.info("Searching for a proposal with uuid = {}", uuid);
+        LOG.info("Searching for proposal = {}", uuid);
         Proposal proposal = manager.createQuery("select p from Proposal p where uuid = :puuid", Proposal.class)
                 .setParameter("puuid", uuid).getResultStream().findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Proposal must exist."));
-        LOG.info("Proposal with uuid = {} found.", uuid);
+        LOG.info("Proposal = {} found.", uuid);
         return ResponseEntity.ok(new ProposalStatusResponse(proposal));
     }
 }

@@ -2,6 +2,8 @@ package br.com.zupacademy.yudi.proposta.card;
 
 import br.com.zupacademy.yudi.proposta.shared.validation.Base64;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotBlank;
 
@@ -13,12 +15,15 @@ public class BiometryRequest {
     @NotBlank
     @Base64
     private String biometryId;
+    private Logger LOG = LoggerFactory.getLogger(BiometryRequest.class);
 
     public String getBiometryId() {
         return biometryId;
     }
 
     public Biometry toBiometry(Card card) {
-        return new Biometry(biometryId, card);
+        Biometry biometry = new Biometry(biometryId, card);
+        LOG.info("New biometry = {} for card = {}", biometry.getUuid(), card.getUuid());
+        return biometry;
     }
 }

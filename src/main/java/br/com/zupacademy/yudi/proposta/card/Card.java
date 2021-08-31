@@ -1,6 +1,8 @@
 package br.com.zupacademy.yudi.proposta.card;
 
 import br.com.zupacademy.yudi.proposta.proposal.Proposal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -51,6 +53,10 @@ public class Card {
 
     public String getNumber() {
         return number;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public void addNewBiometry(Biometry biometry) {

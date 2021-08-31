@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "biometries")
@@ -20,6 +21,9 @@ public class Biometry {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
+    private UUID uuid = UUID.randomUUID();
+
     @ManyToOne
     @JoinColumn(name = "card_id", nullable = false)
     private Card card;
@@ -31,6 +35,10 @@ public class Biometry {
     public Biometry(String biometryId, Card card) {
         this.code = biometryId;
         this.card = card;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     @Override
