@@ -34,12 +34,12 @@ public class CardScheduler {
 
     private final Logger LOG = LoggerFactory.getLogger(CardScheduler.class);
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 10000)
     void include() {
         LOG.info("[Proposal card association scheduler running...]");
         List<Proposal> proposals = manager.createQuery("select p from Proposal p where p.card.id is NULL",
                 Proposal.class).getResultList();
-        LOG.info("Query result list size = {}", proposals.size());
+        LOG.info("Number of proposals without any card = {}", proposals.size());
         if (!proposals.isEmpty()) {
             Proposal proposal = proposals.stream().findFirst().get();
             CardResponse cardResponse = getCardResponse(proposal);
@@ -54,7 +54,7 @@ public class CardScheduler {
     private CardResponse sendRequestToContas(Proposal proposal) {
         CardResponse response = client.generate(new CardRequest(proposal.getDocument(), proposal.getName(),
                 String.valueOf(proposal.getId())));
-        LOG.info("Request sent for proposals document = {}", proposal.getDocument());
+        LOG.info("Request sent for proposal = {}", proposal.getUuid());
         return response;
     }
 
@@ -65,10 +65,10 @@ public class CardScheduler {
             protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
                 Card card = cardResponse.toCard(manager);
                 manager.persist(card);
-                LOG.info("Card number = {} saved on database", card.getNumber());
+                LOG.info("Card = {} saved on database", card.getUuid());
                 proposal.setCard(card);
                 manager.merge(proposal);
-                LOG.info("Card number = {} associated with proposal document = {}", card.getNumber(), proposal.getDocument());
+                LOG.info("Card = {} associated with proposal = {}", card.getUuid(), proposal.getUuid());
             }
         });
     }

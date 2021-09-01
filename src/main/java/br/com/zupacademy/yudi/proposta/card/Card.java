@@ -1,17 +1,17 @@
 package br.com.zupacademy.yudi.proposta.card;
 
 import br.com.zupacademy.yudi.proposta.proposal.Proposal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.CascadeType.PERSIST;
+import static org.springframework.util.Assert.notNull;
+import static org.springframework.util.Assert.state;
 
 @Entity
 @Table(name = "cards")
@@ -37,8 +37,14 @@ public class Card {
     @Column(nullable = false)
     private UUID uuid = UUID.randomUUID();
 
-    @OneToMany(mappedBy = "card", cascade = ALL)
+    @OneToMany(mappedBy = "card", cascade = PERSIST)
     private Set<Biometry> biometries = new HashSet<>();
+
+    @OneToMany(mappedBy = "card", cascade = PERSIST)
+    private Set<Block> blocks = new HashSet<>();
+
+    @Column(name = "is_blocked")
+    private Boolean blocked = false;
 
     @Deprecated
     private Card() {
@@ -60,6 +66,19 @@ public class Card {
     }
 
     public void addNewBiometry(Biometry biometry) {
+        notNull(biometry, "Biometry is required.");
         this.biometries.add(biometry);
+    }
+
+    public void block(HttpServletRequest request) {
+        notNull(request, "Request information are required.");
+        state(!blocked, "Card must not be blocked.");
+        this.blocks.add(new Block(request.getRemoteAddr(), request.getHeader("User-Agent"), this));
+        blocked = true;
+    }
+
+    public boolean isBlocked() {
+        notNull(blocked, "Card must have a state, whether if it is blocked or not.");
+        return blocked;
     }
 }
