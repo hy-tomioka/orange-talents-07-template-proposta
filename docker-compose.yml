@@ -48,6 +48,8 @@ services:
       DATABASE_PASSWORD: 1234
       ANALISE_URL: http://analise:9999/api
       CONTAS_URL: http://contas:8888/api
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/proposta
+      KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/proposta/protocol/openid-connect/certs
     depends_on:
       - postgres-proposals
 
@@ -80,6 +82,7 @@ services:
       - analise
       - transacoes
       - postgres
+      - proposal
     environment:
       DB_VENDOR: postgres
       DB_ADDR: postgres

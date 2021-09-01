@@ -13,6 +13,12 @@ spring:
         format-sql: true
       javax.persistence:
         query.timeout: 50
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:18080/auth/realms/proposta}
+          jwk-set-uri: ${KEYCLOAK_JWKS_URI:http://localhost:18080/auth/realms/proposta/protocol/openid-connect/certs}
 
 server:
   error:
@@ -37,3 +43,5 @@ management:
   health:
     db:
       enable: true
+
+logging.level.org.springframework.security: DEBUG
