@@ -23,11 +23,10 @@ public class CardScheduler {
 
     @Autowired
     private PlatformTransactionManager transactionManager;
+    private TransactionTemplate transactionTemplate;
 
     @PersistenceContext
     private EntityManager manager;
-
-    private TransactionTemplate transactionTemplate;
 
     @Autowired
     private CardClient client;

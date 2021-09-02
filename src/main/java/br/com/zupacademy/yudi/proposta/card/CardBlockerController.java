@@ -4,7 +4,6 @@ import br.com.zupacademy.yudi.proposta.shared.transaction.TransactionRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +47,7 @@ public class CardBlockerController {
 
         LOG.info("Verifying if card = {} is blocked.", card.getUuid());
         if (card.isBlocked()) throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Card is already blocked.");
-        card.block(request);
+        card.addBlockAttempt(request);
         LOG.info("Card = {} blocked successfully", card.getUuid());
         transactionRunner.saveAndCommit(card);
 

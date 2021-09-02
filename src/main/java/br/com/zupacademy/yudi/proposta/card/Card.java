@@ -9,7 +9,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import static br.com.zupacademy.yudi.proposta.card.CardStatus.*;
 import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.EnumType.STRING;
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.util.Assert.state;
 
@@ -43,8 +45,9 @@ public class Card {
     @OneToMany(mappedBy = "card", cascade = PERSIST)
     private Set<Block> blocks = new HashSet<>();
 
-    @Column(name = "is_blocked")
-    private Boolean blocked = false;
+    @Enumerated(STRING)
+    @Column(name = "status", nullable = false)
+    private CardStatus status = AVAILABLE;
 
     @Deprecated
     private Card() {
@@ -65,20 +68,29 @@ public class Card {
         return uuid;
     }
 
+    public CardStatus getStatus() {
+        return status;
+    }
+
     public void addNewBiometry(Biometry biometry) {
         notNull(biometry, "Biometry is required.");
         this.biometries.add(biometry);
     }
 
-    public void block(HttpServletRequest request) {
+    public void addBlockAttempt(HttpServletRequest request) {
         notNull(request, "Request information are required.");
-        state(!blocked, "Card must not be blocked.");
+        state(status == AVAILABLE, "Card must not be blocked.");
         this.blocks.add(new Block(request.getRemoteAddr(), request.getHeader("User-Agent"), this));
-        blocked = true;
+        this.status = TEMPORARY_BLOCKED;
     }
 
     public boolean isBlocked() {
-        notNull(blocked, "Card must have a state, whether if it is blocked or not.");
-        return blocked;
+        notNull(status, "Card must have a state, whether if it is blocked or not.");
+        return status == TEMPORARY_BLOCKED;
     }
+
+    public void fullBlock() {
+        this.status = BLOCKED;
+    }
+
 }
