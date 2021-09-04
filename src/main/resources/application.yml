@@ -43,6 +43,17 @@ management:
   health:
     db:
       enable: true
+  endpoints:
+    web:
+      exposure:
+        include: info,health,prometheus
+  prometheus:
+    enabled: true
+
+  metrics:
+    tags:
+      aplicacao: ${APPLICATION_NAME:serviço de proposta}
+      ambiente: ${PROFILE:desenvolvimento}
 
 #logging.level.org.springframework:
 #  security: DEBUG
