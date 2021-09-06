@@ -21,7 +21,7 @@ public class Wallet {
     private UUID uuid;
 
     @OneToOne
-    @JoinColumn(name = "card_id", nullable = false)
+    @JoinColumn(name = "card_id", nullable = false, unique = true)
     private Card card;
 
     public Wallet(UUID uuid, PaymentMethod service, Card card) {

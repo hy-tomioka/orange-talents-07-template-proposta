@@ -4,11 +4,17 @@ import java.util.stream.Stream;
 
 public enum PaymentMethod {
 
-    PAYPAL,
-    SAMSUNG_PAY;
+    PAYPAL("paypal"),
+    SAMSUNG_PAY("samsung pay");
+
+    private final String name;
+
+    PaymentMethod(String name) {
+        this.name = name;
+    }
 
     public static PaymentMethod fromValue(String value) {
-        return Stream.of(values()).filter(v -> v.name().equals(value.toUpperCase())).findAny()
-                .orElseThrow(() -> new IllegalArgumentException("Must be a valid payment gateway."));
+        return Stream.of(values()).filter(v -> v.name.equals(value.toLowerCase())).findAny()
+                .orElseThrow(() -> new IllegalArgumentException("Must be a valid payment method."));
     }
 }
