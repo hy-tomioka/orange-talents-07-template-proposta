@@ -49,6 +49,9 @@ public class Card {
     @Column(name = "status", nullable = false)
     private CardStatus status = AVAILABLE;
 
+    @OneToMany(mappedBy = "card", cascade = PERSIST)
+    private Set<TravelNotification> travelNotifications = new HashSet<>();
+
     @Deprecated
     private Card() {
     }
@@ -93,4 +96,7 @@ public class Card {
         this.status = BLOCKED;
     }
 
+    public void addTravelNotification(TravelNotification travelNotification) {
+        this.travelNotifications.add(travelNotification);
+    }
 }

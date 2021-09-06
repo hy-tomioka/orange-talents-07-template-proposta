@@ -6,7 +6,7 @@ spring:
     password: ${DATABASE_PASSWORD:1234}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         show-sql: true

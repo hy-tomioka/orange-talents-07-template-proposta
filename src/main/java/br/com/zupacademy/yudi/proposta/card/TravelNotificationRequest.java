@@ -23,9 +23,9 @@ public class TravelNotificationRequest {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkout;
 
-    public TravelNotification toTravelNotification(HttpServletRequest httpRequest) {
+    public TravelNotification toTravelNotification(HttpServletRequest httpRequest, Card card) {
         notNull(httpRequest, "HTTP request information are required.");
-        return new TravelNotification(destiny, checkout,
+        return new TravelNotification(destiny, checkout, card,
                 httpRequest.getHeader("User-Agent"),
                 httpRequest.getRemoteAddr());
     }

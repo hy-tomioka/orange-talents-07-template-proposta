@@ -2,7 +2,6 @@ package br.com.zupacademy.yudi.proposta.external_services.contas;
 
 import br.com.zupacademy.yudi.proposta.card.Card;
 import br.com.zupacademy.yudi.proposta.card.CardRepository;
-import br.com.zupacademy.yudi.proposta.shared.transaction.TransactionRunner;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +17,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.persistence.EntityManager;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static br.com.zupacademy.yudi.proposta.card.CardStatus.TEMPORARY_BLOCKED;
 
@@ -30,18 +26,17 @@ import static br.com.zupacademy.yudi.proposta.card.CardStatus.TEMPORARY_BLOCKED;
 public class CardBlockerScheduler {
 
     private Logger LOG = LoggerFactory.getLogger(CardBlockerScheduler.class);
-    private final EntityManager manager;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
-    private TransactionTemplate transactionTemplate;
 
     @Autowired
     private CardClient cardClient;
+
+    private PlatformTransactionManager transactionManager;
+    private TransactionTemplate transactionTemplate;
     private final CardRepository cardRepository;
 
-    public CardBlockerScheduler(EntityManager manager, TransactionRunner transactionRunner, CardRepository cardRepository) {
-        this.manager = manager;
+
+    public CardBlockerScheduler(PlatformTransactionManager transactionManager, CardRepository cardRepository) {
+        this.transactionManager = transactionManager;
         this.cardRepository = cardRepository;
     }
 
@@ -50,9 +45,10 @@ public class CardBlockerScheduler {
         LOG.info("[Legacy application card blocker scheduler running...]");
         Page<Card> cards = cardRepository.findAllByStatus(TEMPORARY_BLOCKED, PageRequest.of(0, 5));
         LOG.info("Total cards to block = {}", cards.getTotalElements());
-        cards.forEach(this::execute);
-        List<Card> blockedCards = cards.stream().collect(Collectors.toList());
-        updateStatus(blockedCards);
+        if (!cards.isEmpty()) {
+            cards.forEach(this::execute);
+            updateStatus(cards.toList());
+        }
     }
 
     private void execute(Card card) {
@@ -74,7 +70,6 @@ public class CardBlockerScheduler {
     }
 
     private void updateStatus(List<Card> cards) {
-        if (cards.isEmpty()) return;
         transactionTemplate = new TransactionTemplate(transactionManager);
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override

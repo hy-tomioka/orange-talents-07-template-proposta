@@ -39,8 +39,9 @@ public class TravelNotificationController {
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Card must exist."));
         LOG.info("Card = {} found.", card.getUuid());
 
-        TravelNotification travelNotification = request.toTravelNotification(httpRequest);
-        transactionRunner.saveAndCommit(travelNotification);
+        TravelNotification travelNotification = request.toTravelNotification(httpRequest, card);
+        card.addTravelNotification(travelNotification);
+        transactionRunner.saveAndCommit(card);
         LOG.info("Travel notification = {} saved on database", travelNotification.getUuid());
 
         return ResponseEntity.created(uriComponentsBuilder

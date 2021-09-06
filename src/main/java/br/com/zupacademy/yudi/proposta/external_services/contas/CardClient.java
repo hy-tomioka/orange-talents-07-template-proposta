@@ -15,4 +15,8 @@ public interface CardClient {
 
     @PostMapping("/cartoes/{number}/bloqueios")
     CardBlockerResponse block(@PathVariable("number") String number, @RequestBody @Valid CardBlockerRequest request);
+
+    @PostMapping("/cartoes/{number}/avisos")
+    TravelNotifierResponse notifyTravel(@PathVariable("number") String number,
+                                        @RequestBody @Valid TravelNotifierRequest request);
 }
