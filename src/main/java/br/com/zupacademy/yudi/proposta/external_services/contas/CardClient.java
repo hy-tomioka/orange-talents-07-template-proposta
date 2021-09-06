@@ -1,5 +1,6 @@
 package br.com.zupacademy.yudi.proposta.external_services.contas;
 
+import br.com.zupacademy.yudi.proposta.card.WalletRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,4 +20,7 @@ public interface CardClient {
     @PostMapping("/cartoes/{number}/avisos")
     TravelNotifierResponse notifyTravel(@PathVariable("number") String number,
                                         @RequestBody @Valid TravelNotifierRequest request);
+
+    @PostMapping("/cartoes/{number}/carteiras")
+    WalletResponse includeWallet(@PathVariable("number") String number, @RequestBody @Valid WalletRequest request);
 }

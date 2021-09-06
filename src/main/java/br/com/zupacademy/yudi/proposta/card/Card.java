@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static br.com.zupacademy.yudi.proposta.card.CardStatus.*;
+import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
 import static org.springframework.util.Assert.notNull;

@@ -1,8 +1,7 @@
-package br.com.zupacademy.yudi.proposta.card;
+package br.com.zupacademy.yudi.proposta.external_services.contas;
 
-import br.com.zupacademy.yudi.proposta.external_services.contas.CardClient;
-import br.com.zupacademy.yudi.proposta.external_services.contas.TravelNotifierRequest;
-import br.com.zupacademy.yudi.proposta.external_services.contas.TravelNotifierResponse;
+import br.com.zupacademy.yudi.proposta.card.TravelNotification;
+import br.com.zupacademy.yudi.proposta.card.TravelNotificationRepository;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
