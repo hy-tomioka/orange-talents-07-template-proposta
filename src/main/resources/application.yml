@@ -55,6 +55,13 @@ management:
       aplicacao: ${APPLICATION_NAME:serviço de proposta}
       ambiente: ${PROFILE:desenvolvimento}
 
+opentracing:
+  jaegar:
+    enabled: ${JAEGAR_ENABLED:true}
+    service-name: proposal
+    http-sender.url: ${JAEGER_ENDPOINT:http://localhost:14268/api/traces}
+    probabilistic-sampler.sampling-rate: ${JAEGER_SAMPLER:1}
+
 #logging.level.org.springframework:
 #  security: DEBUG
 #  web: DEBUG
