@@ -17,7 +17,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests(authorizeRequests -> authorizeRequests
                 .antMatchers(POST, "/api/proposals").hasAuthority("SCOPE_proposta-scope")
-                .antMatchers(GET, "/actuator/prometheus").permitAll()
+                .antMatchers(GET,  "/actuator/prometheus").permitAll()
                 .anyRequest().authenticated()).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
         http.sessionManagement().sessionCreationPolicy(STATELESS);
     }

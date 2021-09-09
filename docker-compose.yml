@@ -93,6 +93,7 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: Pa55w0rd
       POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
+      KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
     restart: on-failure
 
   analise:
@@ -143,8 +144,10 @@ services:
   prometheus:
     image: prom/prometheus:v2.22.0
     volumes:
-      #  - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-volume:/etc/prometheus/
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
 
