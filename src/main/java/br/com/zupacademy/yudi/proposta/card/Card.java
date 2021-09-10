@@ -1,6 +1,7 @@
 package br.com.zupacademy.yudi.proposta.card;
 
 import br.com.zupacademy.yudi.proposta.proposal.Proposal;
+import br.com.zupacademy.yudi.proposta.security.EncryptConverter;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import static br.com.zupacademy.yudi.proposta.card.CardStatus.*;
-import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.STRING;
 import static org.springframework.util.Assert.notNull;
@@ -25,6 +25,7 @@ public class Card {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @Convert(converter = EncryptConverter.class)
     private String number;
 
     @Column(nullable = false)

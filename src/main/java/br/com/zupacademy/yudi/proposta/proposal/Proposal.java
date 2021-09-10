@@ -1,6 +1,7 @@
 package br.com.zupacademy.yudi.proposta.proposal;
 
 import br.com.zupacademy.yudi.proposta.card.Card;
+import br.com.zupacademy.yudi.proposta.security.EncryptConverter;
 import br.com.zupacademy.yudi.proposta.shared.validation.CpfOrCnpj;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ public class Proposal {
 
     @Column(nullable = false)
     @CpfOrCnpj
+    @Convert(converter = EncryptConverter.class)
     private String document;
 
     @Column(nullable = false)
